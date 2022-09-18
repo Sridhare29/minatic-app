@@ -24,7 +24,7 @@ export default function ViewTranscriptCard({id,created}) {
     if (id) {
       getTranscriptData(id)
     }
-  }, [transcriptData])
+  }, [id])
 
 
     return (
