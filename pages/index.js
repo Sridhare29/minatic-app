@@ -2,8 +2,6 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link';
 
-import { signIn, signOut, getSession} from 'next-auth/react';
-
 import styles from '../styles/Home.module.css'
 //import minaticLogo from "../styles/minatic.png"
 
@@ -45,11 +43,24 @@ export default function Index({session}) {
           <code className={styles.code}>Your Minutes Secretary</code>
         </p>
 
-       
-        <button className='bg-blue-300 hover:bg-slate-500 hover:text-white py-2 px-4 rounded-full'  onClick={() => signIn()}>Sign In</button>
+        <div className={styles.grid}>
+
+          <Link href="/minatic/view">
+            <a className={styles.card}>
+              <h2 className='text-3xl font-bold underline'>View My Minutes</h2>
+              <p>View all minutes</p>
+            </a>
+          </Link>
+          
+          <Link href="/minatic/start">
+            <a className={styles.card}>
+              <h2 className='text-3xl font-bold underline'>Start Meeting</h2>
+              <p>Start meeting</p>
+            </a>
+          </Link>
+        </div>
 
         <p>Still under development...</p>
-        
       </main>
 
       <footer className={styles.footer}>
