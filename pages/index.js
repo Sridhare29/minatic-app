@@ -27,7 +27,7 @@ return {
 
 }
 
-export default function Home({session}) {
+export default function Index({session}) {
   return (
     <div className={styles.container}>
       <Head>
