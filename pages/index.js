@@ -2,10 +2,32 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link';
 
+import { signIn, signOut, getSession} from 'next-auth/react';
+
 import styles from '../styles/Home.module.css'
 //import minaticLogo from "../styles/minatic.png"
 
-export default function Home() {
+// server-side rendering
+// to pass session with other props data
+export async function getServerSideProps(context) {
+  
+  const session = await getSession(context)
+  if (session) {
+    return {
+        redirect: {
+            destination: '/home'
+        }
+    }
+}
+return {
+    props: { session }
+}
+
+
+
+}
+
+export default function Home({session}) {
   return (
     <div className={styles.container}>
       <Head>
@@ -23,24 +45,11 @@ export default function Home() {
           <code className={styles.code}>Your Minutes Secretary</code>
         </p>
 
-        <div className={styles.grid}>
-
-          <Link href="/minatic/view">
-            <a className={styles.card}>
-              <h2 className='text-3xl font-bold underline'>View My Minutes</h2>
-              <p>View all minutes</p>
-            </a>
-          </Link>
-          
-          <Link href="/minatic/start">
-            <a className={styles.card}>
-              <h2 className='text-3xl font-bold underline'>Start Meeting</h2>
-              <p>Start meeting</p>
-            </a>
-          </Link>
-        </div>
+       
+        <button className='bg-blue-300 hover:bg-slate-500 hover:text-white py-2 px-4 rounded-full'  onClick={() => signIn()}>Sign In</button>
 
         <p>Still under development...</p>
+        
       </main>
 
       <footer className={styles.footer}>
