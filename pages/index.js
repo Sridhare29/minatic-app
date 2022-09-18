@@ -27,14 +27,14 @@ export default function Home() {
 
           <Link href="/minatic/view">
             <a className={styles.card}>
-              <h2>View My Minutes</h2>
+              <h2 className='text-3xl font-bold underline'>View My Minutes</h2>
               <p>View all minutes</p>
             </a>
           </Link>
           
           <Link href="/minatic/start">
             <a className={styles.card}>
-              <h2>Start Meeting</h2>
+              <h2 className='text-3xl font-bold underline'>Start Meeting</h2>
               <p>Start meeting</p>
             </a>
           </Link>
@@ -52,3 +52,7 @@ export default function Home() {
     </div>
   )
 }
+
+//TODO: Finalise Front-End Simple Design
+
+//TODO: Setup Backend Transcription`
