@@ -1,9 +1,30 @@
 import styles from '../../styles/Home.module.css';
 import Link from 'next/link';
 
-export default function view() {
+import {getAllTranscripts} from '../../lib/assemblyai';
+
+import ViewTranscriptCard from '../../components/ViewTranscriptCard';
+
+export async function getServerSideProps() {
+  const res = await getAllTranscripts()
+  const transcripts = res.data.transcripts
+  return { props: { transcripts} }
+}
+
+export default function View({transcripts}) {
+  function createTranscriptCard(transcript) {
+    return (
+      <ViewTranscriptCard 
+              key = {transcript.id}
+              id = {transcript.id}
+              created = {transcript.created}
+            />
+    )
+  }
+
     return (
         <>
+        
         
         <main className={styles.main}>
         <h1 className={styles.title}>
@@ -11,25 +32,8 @@ export default function view() {
         </h1>
 
         <div className={styles.grid}>
-            <a className={styles.card}>
-              <p>Transcription #1 here</p>
-              <button>Email Transcript</button>
-            </a>
-
-            <a className={styles.card}>
-              <p>Transcription #2 here</p>
-              <button>Email Transcript</button>
-            </a>
-
-            <a className={styles.card}>
-              <p>Transcription #3 here</p>
-              <button>Email Transcript</button>
-            </a>
-
-            <a className={styles.card}>
-              <p>Transcription #4 here</p>
-              <button>Email Transcript</button>
-            </a>
+          {transcripts.map(createTranscriptCard)}
+           
         </div>
 
         
