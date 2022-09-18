@@ -5,7 +5,27 @@ import Link from 'next/link';
 import styles from '../styles/Home.module.css'
 //import minaticLogo from "../styles/minatic.png"
 
-export default function Home() {
+// server-side rendering
+// to pass session with other props data
+export async function getServerSideProps(context) {
+  
+  const session = await getSession(context)
+  if (session) {
+    return {
+        redirect: {
+            destination: '/home'
+        }
+    }
+}
+return {
+    props: { session }
+}
+
+
+
+}
+
+export default function Index({session}) {
   return (
     <div className={styles.container}>
       <Head>
