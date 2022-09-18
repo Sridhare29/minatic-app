@@ -32,6 +32,7 @@ export default function Index({session}) {
     <div className={styles.container}>
       <Head>
         <title>Minatic App</title>
+        <meta name="google-site-verification" content="MJ_yxEc15CNe0xt795x_8pnIOJ8iMdt7urt_vGJ9WrE" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
