@@ -2,9 +2,6 @@ import React from 'react'
 import MicRecorder from "mic-recorder-to-mp3"
 import { useEffect, useState, useRef } from "react"
 
-//const assemblyai = require('@phillipchaffee/assemblyai-v2-node-sdk');
-//const client = new assemblyai.AssemblyClient('224ddc6c7759424780cd544db3b788c6');
-
 export default function Recorder({passAudioFile}) {
 
   // Mic-Recorder-To-MP3
@@ -39,6 +36,7 @@ export default function Recorder({passAudioFile}) {
         setBlobUrl(newBlobUrl)
         setIsRecording(false)
         setAudioFile(file)
+        console.log(file)
 
         //TODO: Pass to assembly file here
         passAudioFile(file)
@@ -59,7 +57,7 @@ export default function Recorder({passAudioFile}) {
             <button disabled={!isRecording} onClick={stopRecording} className="bg-red-300 hover:bg-red-400 text-gray-800 font-bold py-2 px-4 rounded-full">
             Finish Meeting
             </button>
-            {/* <button>SUBMIT</button> */}
+            
         </div>
     </>
   )
