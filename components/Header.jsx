@@ -38,9 +38,9 @@ function Header() {
             <li>
               <a href="#learnmore" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">Learn more</a>
             </li>
-            <li>
+            {/* <li>
               <Link href="/minatic/beta" className="font-medium text-gray-600 hover:text-gray-900 px-5 py-3 flex items-center transition duration-150 ease-in-out">Go to Beta</Link>
-            </li>
+            </li> */}
             
             <li>
             
