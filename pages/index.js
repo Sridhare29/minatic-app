@@ -3,9 +3,14 @@ import Image from 'next/image'
 import Link from 'next/link';
 
 import styles from '../styles/Home.module.css'
-//import minaticLogo from "../styles/minatic.png"
 
 import { useSession, signIn, signOut, getSession } from 'next-auth/react';
+import Header from '../components/Header';
+import Home from '../components/Home';
+
+import Banner from '../components/Banner';
+import FeaturesHome from '../components/Features';
+import WaitingList from '../components/WaitingList';
 
 // server-side rendering
 // to pass session with other props data
@@ -29,7 +34,7 @@ return {
 
 export default function Index({session}) {
   return (
-    <div className={styles.container}>
+    <div className="flex flex-col min-h-screen overflow-hidden">
       <Head>
         <title>Minatic App</title>
         <meta name="google-site-verification" content="MJ_yxEc15CNe0xt795x_8pnIOJ8iMdt7urt_vGJ9WrE" />
@@ -37,32 +42,22 @@ export default function Index({session}) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="#">Minatic</a>
-        </h1>
+      <Header />
 
-        <p className={styles.description}>
-          <code className={styles.code}>Your Minutes Secretary</code>
-        </p>
+      <Home />
 
-        <button className='bg-blue-300 hover:bg-slate-500 hover:text-white py-2 px-4 rounded-full' onClick={() => signIn()}>Sign In</button>
+      <FeaturesHome />
 
-        <p>Still under development...</p>
-
-      </main>
+      {/* TODO: Link to Hubspot/MailChimp */}
+      <WaitingList />
 
       <footer className={styles.footer}>
-        <p>Powered by Minatic Team</p>
+        <p className='text-gray-500 no-underline hover:no-underline'>&copy; Minatic 2022</p>
         <span className={styles.logo}>
-            <Image src="/minatic.png" alt="Minatic Logo" width={20} height={20} />
+            <Image src="/minatic.png" alt="Minatic Logo" width={20} height={20} />            
         </span>
-      </footer>
+    </footer>
+
     </div>
   )
 }
-
-//TODO: Finalise Front-End Simple Design
-
-//TODO: Setup Backend Transcription`
-

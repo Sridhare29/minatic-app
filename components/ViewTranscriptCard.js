@@ -3,6 +3,8 @@ import styles from '../styles/Home.module.css';
 
 import {getTranscript} from "../lib/assemblyai"
 
+
+// Data that I can receive
 // id: 'o9yi9knyjh-b508-45a3-943a-917ab81a225f',
 //     resource_url: 'https://api.assemblyai.com/v2/transcript/o9yi9knyjh-b508-45a3-943a-917ab81a225f',
 //     status: 'completed',
