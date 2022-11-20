@@ -33,7 +33,7 @@ function Home() {
           <div>
             <div className="relative flex justify-center mb-8">
               <div className="flex flex-col justify-center">
-                <Image className="mx-auto" src="/images/features-bg.png" alt="Minatic Logo" width="768" height="432" />
+                <Image className="mx-auto" src="/images/bg-features.png" alt="Minatic Logo" width="768" height="432" />
                 <svg className="absolute inset-0 max-w-full mx-auto md:max-w-none h-auto" width="768" height="432" viewBox="0 0 768 432" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
                   <defs>
                     <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="hero-ill-a">
@@ -75,7 +75,8 @@ function Home() {
             {/* Modal */}
             <Modal id="modal" ariaLabel="modal-headline" show={videoModalOpen} handleClose={() => setVideoModalOpen(false)}>
               <div className="relative pb-9/16">
-                <iframe className="absolute w-full h-full" src="https://player.vimeo.com/video/174002812" title="Video" allowFullScreen></iframe>
+                <iframe className="absolute w-full h-full" width="560" height="315" src="https://www.youtube.com/embed/Na3rngzKaLE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                {/* <iframe  src="https://www.youtube.com/watch?v=Na3rngzKaLE&ab_channel=MinaticOfficial" title="Video" allowFullScreen></iframe> */}
               </div>
             </Modal>
 

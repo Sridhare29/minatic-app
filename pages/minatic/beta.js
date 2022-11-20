@@ -69,7 +69,7 @@ export default function Beta({session}) {
   const checkCompletionInterval = setInterval(async () => {
     const transcript = await getTranscript(id) 
     
-    console.log(transcript)
+    // console.log(transcript)
     setTranscript(transcript.data)
 
     const transcriptStatus = transcript.data.status
