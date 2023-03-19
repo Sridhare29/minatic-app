@@ -3,7 +3,7 @@ import TranscriptContainer from '@/components/dashboard/TranscriptContainer';
 import { SelectField } from '@/components/Fields';
 import { useState } from 'react';
 
-export default function view() {
+export default function View() {
 
     const [transcript, setTranscript] = useState([
         { speaker: "Speaker A", text: "This is a test." },
