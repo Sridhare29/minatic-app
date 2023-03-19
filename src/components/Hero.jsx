@@ -32,7 +32,7 @@ export function Hero() {
         Your Minutes Secretary
       </p>
       <div className="mt-10 flex justify-center gap-x-6">
-        <Button href="/register">Try a demo here</Button>
+        <Button href="/minatic/new" color='blue'>Try a demo here</Button>
         <Button
           href="https://www.youtube.com/watch?v=Na3rngzKaLE"
           variant="outline"

@@ -100,19 +100,20 @@ export function Header() {
             </Link>
             <div className="hidden md:flex md:gap-x-6">
               <NavLink href="#features">Features</NavLink>
+              <NavLink href="#team">Team</NavLink>
               {/* <NavLink href="#testimonials">Testimonials</NavLink> */}
               {/* <NavLink href="#pricing">Pricing</NavLink> */}
             </div>
           </div>
           <div className="flex items-center gap-x-5 md:gap-x-8">
-            <div className="hidden md:block">
+            {/* <div className="hidden md:block">
               <NavLink href="/login">Sign in</NavLink>
-            </div>
-            <Button href="/register" color="blue">
+            </div> */}
+            {/* <Button href="/register" color="blue">
               <span>
-                Get started <span className="hidden lg:inline">today</span>
+                Try a demo <span className="hidden lg:inline">here</span>
               </span>
-            </Button>
+            </Button> */}
             <div className="-mr-1 md:hidden">
               <MobileNavigation />
             </div>

@@ -5,35 +5,32 @@ import clsx from 'clsx'
 
 import { Container } from '@/components/Container'
 import backgroundImage from '@/images/background-features.jpg'
-import screenshotExpenses from '@/images/screenshots/expenses.png'
-import screenshotPayroll from '@/images/screenshots/payroll.png'
-import screenshotReporting from '@/images/screenshots/reporting.png'
-import screenshotVatReturns from '@/images/screenshots/vat-returns.png'
+import SpeechToTextImage from '@/images/screenshots/stt.png'
 
 const features = [
   {
     title: 'Meeting Upload',
     description:
       "Upload your recent meetings and Minatic will summarise according to your meeting type.",
-    image: screenshotPayroll,
+    image: SpeechToTextImage,
   },
   {
     title: 'Speaker Identification',
     description:
       "Minatic will not only recognise speech but also be able to identify speakers in the meeting.",
-    image: screenshotPayroll,
+    image: SpeechToTextImage,
   },
   {
     title: 'Automated Minutes',
     description:
       "Minatic will format your meeting into a minutes template according to your type of meeting.",
-    image: screenshotExpenses,
+    image: SpeechToTextImage,
   },
   {
     title: 'Export your minutes',
     description:
       "Export your minutes with follow-up ations and meeting summaries.",
-    image: screenshotVatReturns,
+    image: SpeechToTextImage,
   },
   // {
   //   title: '',

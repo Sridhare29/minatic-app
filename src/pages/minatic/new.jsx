@@ -10,7 +10,7 @@ export default function New() {
   return (
     <>
       <Head>
-        <title>New Meeting</title>
+        <title>Minatic Demo</title>
       </Head>
       <AuthLayout>
         <div className="flex flex-col">
