@@ -1,12 +1,15 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import Image from 'next/image';
+
+import Ziyi from '@/images/avatars/Ziyi.png';
+import Minatic from '@/images/minatic.png';
 
 const user = {
-  name: 'Nirat Singh',
-  email: 'nirat@example.com',
-  imageUrl:
-    'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  name: 'Wang Ziyi',
+  email: 'ziyi@example.com',
+  imageUrl: Ziyi
 }
 const navigation = [
 //   { name: 'Dashboard', href: '#', current: true },
@@ -37,17 +40,17 @@ export default function minaticlayout({children}) {
             ```
           */}
           <div className="min-h-full">
-            <Disclosure as="nav" className="bg-indigo-600">
+            <Disclosure as="nav" className="bg-white-600">
               {({ open }) => (
                 <>
                   <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 items-center justify-between">
                       <div className="flex items-center">
                         <div className="flex-shrink-0">
-                          <img
+                          <Image
                             className="h-8 w-8"
-                            src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
-                            alt="Your Company"
+                            src={Minatic}
+                            alt="Minatic Logo"
                           />
                         </div>
                         <div className="hidden md:block">
@@ -72,20 +75,20 @@ export default function minaticlayout({children}) {
                       </div>
                       <div className="hidden md:block">
                         <div className="ml-4 flex items-center md:ml-6">
-                          <button
+                          {/* <button
                             type="button"
                             className="rounded-full bg-indigo-600 p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
                           >
                             <span className="sr-only">View notifications</span>
                             <BellIcon className="h-6 w-6" aria-hidden="true" />
-                          </button>
+                          </button> */}
     
                           {/* Profile dropdown */}
                           <Menu as="div" className="relative ml-3">
                             <div>
                               <Menu.Button className="flex max-w-xs items-center rounded-full bg-indigo-600 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600">
                                 <span className="sr-only">Open user menu</span>
-                                <img className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
+                                <Image className="h-8 w-8 rounded-full" src={user.imageUrl} alt="" />
                               </Menu.Button>
                             </div>
                             <Transition
