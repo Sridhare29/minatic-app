@@ -10,6 +10,7 @@ import { PrimaryFeatures } from '@/components/PrimaryFeatures'
 import { SecondaryFeatures } from '@/components/SecondaryFeatures'
 import { Testimonials } from '@/components/Testimonials'
 import Team from '@/components/Team'
+import Newsletter from '@/components/Newsletter'
 
 export default function Home() {
   return (
@@ -29,10 +30,13 @@ export default function Home() {
         <PrimaryFeatures />
         {/* <SecondaryFeatures /> */}
         {/* <Testimonials /> */}
-        {/* <Pricing /> */}
-        {/* <Faqs /> */}
+        <Pricing />
         <Team />
-        <CallToAction />
+        {/* <Faqs /> */}
+        
+        {/* <CallToAction /> */}
+        <Newsletter />
+        
       </main>
       <Footer />
     </>

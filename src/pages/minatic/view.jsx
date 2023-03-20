@@ -3,15 +3,45 @@ import TranscriptContainer from '@/components/dashboard/TranscriptContainer';
 import { SelectField } from '@/components/Fields';
 import { useState } from 'react';
 
-export default function View() {
+import {getTranscript_demo} from '@/lib/assemblyai';
+import ExportTranscriptButton from '@/components/dashboard/ExportTranscriptButton';
 
-    const [transcript, setTranscript] = useState([
-        { speaker: "Speaker A", text: "This is a test." },
-        { speaker: "Speaker B", text: "This is another test." },
-        { speaker: "Speaker A", text: "This is a third test." }
-      ]);
+// Get transcript data
+export async function getStaticProps() {
+    // Call an external API endpoint to get posts.
+  // You can use any data fetching library
+  const data = await getTranscript_demo()
+  const transcripts = data.data;
+
+  const speakerSets = new Set()
+  data.data.utterances.map(item => {
+    speakerSets.add(item.speaker);
+  })
+  const speakers = [...speakerSets];
+
+  // By returning { props: { posts } }, the Blog component
+  // will receive `posts` as a prop at build time
+  return {
+    props: {
+        transcripts,
+        speakers
+    },
+  }
+}
+
+export default function View({transcripts, speakers}) {
+
     
-      const [oldName, setOldName] = useState(["Speaker A", "Speaker B"]);
+
+
+    // update audioplayer data
+    // update transcript state
+    
+
+
+    const [transcript, setTranscript] = useState(transcripts);
+    
+      const [oldName, setOldName] = useState(speakers);
       const [speakerNameIndex, setSpeakerNameIndex ] = useState(0);
       const [newName, setNewName] = useState("");
     
@@ -43,12 +73,12 @@ export default function View() {
     return (
         <>
             <MinaticLayout>
-                <div className='grid grid-cols-2 gap-4'>
+            <audio className="col-auto w-50" id='player' controls='controls'/>
+                <div className='grid grid-flow-col auto-cols-max gap-4'>
                     <div>
-                        <div id='transcription' className='border border-2'>
-                        <audio className="col-auto w-50" id='player' controls='controls'/>
+                        <div id='transcription' className='max-h-screen border border-2 overflow-auto'>
                             {/* FIXME: Update Speaker Card UI */}                      
-                            <TranscriptContainer transcript={transcript} />
+                            <TranscriptContainer transcript={transcript.utterances} />
                         </div>
                     </div>
                     <div>
@@ -97,6 +127,7 @@ export default function View() {
                                 <div className="mt-2 max-w-xl text-sm text-gray-500">
                                    {/* TODO: Able to provide export functionality */}
                                    Coming Soon!
+                                   <ExportTranscriptButton transcript={transcript} />
                                 </div>
                             </div>
                         </div>

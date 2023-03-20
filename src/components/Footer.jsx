@@ -9,14 +9,15 @@ export function Footer() {
     <footer className="bg-slate-50">
       <Container>
         <div className="py-2">
-          {/* <Logo className="mx-auto h-10 w-auto" /> */}
-          {/* <nav className="mt-10 text-sm" aria-label="quick links">
+          <Logo className="mx-auto h-10 w-auto" />
+          <nav className="mt-10 text-sm" aria-label="quick links">
             <div className="-my-1 flex justify-center gap-x-6">
-              {/* <NavLink href="#features">Features</NavLink> */}
-              {/* <NavLink href="#testimonials">Testimonials</NavLink> */}
-              {/* <NavLink href="#pricing">Pricing</NavLink>
+              <NavLink href="#features">Features</NavLink>
+              <NavLink href="#pricing">Pricing</NavLink>
+              <NavLink href="#team">Team</NavLink>
+              <NavLink href="#newsletter">Get Notified</NavLink>
             </div>
-          </nav> */}
+          </nav>
         </div>
         <div className="flex flex-col items-center border-t border-slate-400/10 py-10 sm:flex-row-reverse sm:justify-between">
           <div className="flex gap-x-6">

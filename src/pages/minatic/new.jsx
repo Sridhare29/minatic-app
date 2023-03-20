@@ -1,12 +1,53 @@
 import Head from 'next/head'
 import Link from 'next/link'
 
+
 import { AuthLayout } from '@/components/AuthLayout'
 import { Button } from '@/components/Button'
 import { SelectField, TextField } from '@/components/Fields'
 import { Logo } from '@/components/Logo'
+import axios from 'axios'
+import { useRouter } from 'next/router'
 
 export default function New() {
+  const router = useRouter()
+
+  const submitNewMeeting = async (e) => {
+    e.preventDefault();
+    console.log(e.target[0].value);
+    console.log(e.target[1].files[0]); //path of file
+    console.log(e.target[2].value);
+    console.log(e.target[3].value);
+
+
+    const body = {
+      "title": e.target[0].value,
+      "file": e.target[1].files[0],
+      "type": e.target[2].value,
+      "email": e.target[3].value
+    }
+
+    const formData = new FormData()
+    formData.append('title', e.target[0].value)
+    // formData.append('file', e.target[1].files[0])
+
+    Array.from(e.target[1].files).forEach((file) => {
+      formData.append('file', file);
+    });
+
+    const response = await axios.post("/api/hello", formData, {
+      method: 'POST',
+      // headers: {
+      //   'Content-Type': 'application/json',
+      // },
+      headers: { 'content-type': 'multipart/form-data' }
+    })
+    console.log('response', response.data);
+
+    router.push('/minatic/view')
+  }
+
+
   return (
     <>
       <Head>
@@ -27,7 +68,9 @@ export default function New() {
           </div>
         </div>
         <form
-          action="#"
+          //action="/api/hello"
+          method='POST'
+          onSubmit={submitNewMeeting}
           className="mt-10 grid grid-cols-1 gap-y-8 gap-x-6 sm:grid-cols-2"
         >
           <TextField
@@ -67,7 +110,7 @@ export default function New() {
           />
           <div className="col-span-full">
             <Button
-              href='/minatic/view'
+              //href='/minatic/view'
               type="submit"
               variant="solid"
               color="blue"
