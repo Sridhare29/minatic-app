@@ -1,11 +1,10 @@
 import MinaticLayout from '@/components/dashboard/minaticLayout';
 import TranscriptContainer from '@/components/dashboard/TranscriptContainer';
 import { SelectField } from '@/components/Fields';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import {getTranscript_demo} from '@/lib/assemblyai';
+import {getTranscript_demo, getTranscript} from '@/lib/assemblyai';
 import ExportTranscriptButton from '@/components/dashboard/ExportTranscriptButton';
-import { useRouter } from 'next/router';
 
 // Get transcript data
 // export async function getStaticProps() {
@@ -30,23 +29,39 @@ import { useRouter } from 'next/router';
 //   }
 // }
 
-export default function View() {
 
-    const router = useRouter()
+export async function getServerSideProps(context) {
+    const id = context.query.data
+    const data = await getTranscript(id);
+    const transcripts = data.data;
+    
+      const speakerSets = new Set()
+  data.data.utterances.map(item => {
+    speakerSets.add(item.speaker);
+  })
+  const speakers = [...speakerSets];
 
-    const {query: {transcripts, speakers, formData} } = router
+      return {
+        props: {
+            transcripts,
+            speakers
+        }
+    }
+}
 
-    // update audioplayer data
-    // update transcript state
-    console.log(transcripts)
-    console.log(speakers)
-    console.log(formData)
+export default function View({transcripts, speakers}) {
 
     
+    // update audioplayer data
+    // update transcript state
+    useEffect(() => {
+        console.log(JSON.parse(localStorage.getItem('audio')))
+    })
+
 
     const [transcript, setTranscript] = useState(transcripts);
     
-      const [oldName, setOldName] = useState([...speakers]);
+      const [oldName, setOldName] = useState(speakers);
       const [speakerNameIndex, setSpeakerNameIndex ] = useState(0);
       const [newName, setNewName] = useState("");
     

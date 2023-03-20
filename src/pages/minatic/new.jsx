@@ -12,8 +12,8 @@ import { getTranscript, getTranscriptionID, uploadMeetingAudio } from '@/lib/ass
 import { useState } from 'react'
 
 
-
 export default function New() {
+
   
   const [transcripts, setTranscription] = useState({})
   const [formData, setFormData] = useState(null)
@@ -46,7 +46,7 @@ export default function New() {
               "type": e.target[2].value,
               "email": e.target[3].value,
             })
-
+            localStorage.setItem("audio",JSON.stringify(e.target[1].files[0]))
 
             pollData(id)
           })
@@ -102,7 +102,7 @@ export default function New() {
 
           Router.push({
                 pathname: '/minatic/view',
-                query: { transcripts, speakers,formData}
+                query: { data: id,  }
               })
     }
   

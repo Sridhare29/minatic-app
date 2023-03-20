@@ -36,9 +36,13 @@ const hello = nextConnect({
 hello.use(upload.array('file'));
 
 hello.post((req, res) => {
-   console.log(req.body.title)
-   console.log(req.files) // file data sent! :)
-   res.status(200).json({ data: 'success' });
+  //  console.log(req.body.title)
+  //  console.log(req.files) // file data sent! :)
+  //  res.status(200).json({ data: 'success' });
+
+  // pass audio to assemblyAi
+  // get confirmation that it is done!
+  
 });
 
 export default hello;
