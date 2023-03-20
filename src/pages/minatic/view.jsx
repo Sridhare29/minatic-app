@@ -5,43 +5,48 @@ import { useState } from 'react';
 
 import {getTranscript_demo} from '@/lib/assemblyai';
 import ExportTranscriptButton from '@/components/dashboard/ExportTranscriptButton';
+import { useRouter } from 'next/router';
 
 // Get transcript data
-export async function getStaticProps() {
-    // Call an external API endpoint to get posts.
-  // You can use any data fetching library
-  const data = await getTranscript_demo()
-  const transcripts = data.data;
+// export async function getStaticProps() {
+//     // Call an external API endpoint to get posts.
+//   // You can use any data fetching library
+//   const data = await getTranscript_demo()
+//   const transcripts = data.data;
 
-  const speakerSets = new Set()
-  data.data.utterances.map(item => {
-    speakerSets.add(item.speaker);
-  })
-  const speakers = [...speakerSets];
+//   const speakerSets = new Set()
+//   data.data.utterances.map(item => {
+//     speakerSets.add(item.speaker);
+//   })
+//   const speakers = [...speakerSets];
 
-  // By returning { props: { posts } }, the Blog component
-  // will receive `posts` as a prop at build time
-  return {
-    props: {
-        transcripts,
-        speakers
-    },
-  }
-}
+//   // By returning { props: { posts } }, the Blog component
+//   // will receive `posts` as a prop at build time
+//   return {
+//     props: {
+//         transcripts,
+//         speakers
+//     },
+//   }
+// }
 
-export default function View({transcripts, speakers}) {
+export default function View() {
 
-    
+    const router = useRouter()
 
+    const {query: {transcripts, speakers, formData} } = router
 
     // update audioplayer data
     // update transcript state
-    
+    console.log(transcripts)
+    console.log(speakers)
+    console.log(formData)
 
+    
 
     const [transcript, setTranscript] = useState(transcripts);
     
-      const [oldName, setOldName] = useState(speakers);
+      const [oldName, setOldName] = useState([...speakers]);
       const [speakerNameIndex, setSpeakerNameIndex ] = useState(0);
       const [newName, setNewName] = useState("");
     

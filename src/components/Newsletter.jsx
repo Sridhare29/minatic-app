@@ -94,7 +94,7 @@ export default function Newsletter() {
                 .
               </p> */}
             </form>
-            { isNotified && <Notification isNotified={isNotified} setIsNotified={setIsNotified} header={header} children={children} /> }
+            { isNotified && <Notification isNotified={isNotified} setIsNotified={setIsNotified} header={header} >{children}</Notification> }
             <svg
               viewBox="0 0 1024 1024"
               className="absolute top-1/2 left-1/2 -z-10 h-[64rem] w-[64rem] -translate-x-1/2"

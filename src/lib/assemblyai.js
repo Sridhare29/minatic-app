@@ -8,6 +8,7 @@ const assembly = axios.create({
   headers: {
     authorization: "224ddc6c7759424780cd544db3b788c6",
     "content-type": "application/json",
+      // "transfer-encoding": "chunked",
   },
 })
 
@@ -24,6 +25,7 @@ export async function getTranscriptionID(url) {
             audio_url: url,
             speaker_labels: true,
             summarization: true,
+            summary_model: "informative",
             summary_type: "bullets",
         })
 }
