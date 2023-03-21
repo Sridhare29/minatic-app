@@ -4,51 +4,57 @@ import Link from 'next/link'
 
 import { AuthLayout } from '@/components/AuthLayout'
 import { Button } from '@/components/Button'
-import { SelectField, TextField } from '@/components/Fields'
+import { DatePickerField, SelectField, TextField } from '@/components/Fields'
 import { Logo } from '@/components/Logo'
-import axios from 'axios'
 import Router from 'next/router'
 import { getTranscript, getTranscriptionID, uploadMeetingAudio } from '@/lib/assemblyai'
 import { useState } from 'react'
+import Notification from '@/components/dashboard/Notification'
+import Datepicker from 'react-tailwindcss-datepicker'
 
 
 export default function New() {
 
-  
-  const [transcripts, setTranscription] = useState({})
-  const [formData, setFormData] = useState(null)
+  const [isNotified, setIsNotified] = useState(false);
+  const [isComplete, setIsComplete] = useState(false);
+  const [header, setHeader] = useState("")
+  const [children, setChildren] = useState("")
 
+  const [dateValue, setDateValue] = useState({ 
+    startDate: null,
+    endDate: null 
+    }); 
+
+    const handleDateValueChange = (newValue) => {
+      console.log("newValue:", newValue); 
+      setDateValue(newValue); 
+      } 
+
+  // submit handler
   const submitNewMeeting = async (e) => {
     e.preventDefault();
 
-    console.log(e.target[0].value);
-    //console.log(e.target[1].files[0]); //path of file
-    console.log(e.target[2].value);
-    console.log(e.target[3].value);
-
-    const audioFile = e.target[1].files[0]
-    console.log(audioFile);
-    //TODO: 
+    const title = e.target[0].value
+    const audioFile = e.target[1].files[0] // path of file
+    const type = e.target[2].value
+    const email = e.target[3].value
 
     // submit file data to assembly ai to get transcript data
-    console.log("Receiving Meeting Audio")
+
+    // Show loading bar indication
+    setHeader("Receiving Audio")
+    setIsNotified(true)
+
+
     uploadMeetingAudio(audioFile)
-      .then((res) => {
+      .then((uploadData) => {
         // get transcription data
-        console.log("Meeting Audio Received. Getting Transcription Data.")
-        getTranscriptionID(res.data.upload_url)
+        setHeader("Audio Received. Processing Audio to transcribe")
+        getTranscriptionID(uploadData.data.upload_url)
           .then((res) => {
             const id = res.data.id;
             // get data transcript data
-            setFormData({
-              "title": e.target[0].value,
-              "file": e.target[1].files[0],
-              "type": e.target[2].value,
-              "email": e.target[3].value,
-            })
-            localStorage.setItem("audio",JSON.stringify(e.target[1].files[0]))
-
-            pollData(id)
+            pollData(id, title, type  )
           })
           .catch((err) => {
             // TODO: show error to user to try again
@@ -75,13 +81,20 @@ export default function New() {
     // })
     // console.log('response', response.data);
   }
-
-  async function pollData(id) {
   
+  const delay = ms => new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+
+
+  async function pollData(id, title, type) {
+    
+    setHeader("Processing Transcription")
     // poll transcript data <-
   const checkCompletionInterval = setInterval(async () => {
     const transcript = await getTranscript(id);
     const transcriptStatus = transcript.data.status
+    
   
     if (transcriptStatus !== "completed") {
       // show message
@@ -91,19 +104,18 @@ export default function New() {
       console.log(transcript);
       console.log("\nTranscription completed!\n")
       clearInterval(checkCompletionInterval)
-  
-      const speakerSets = new Set()
-      transcript.data.utterances.map(item => {
-                  speakerSets.add(item.speaker);
-                })
-                const speakers = [...speakerSets];
-  
-          const transcripts = transcript.data;
-
-          Router.push({
-                pathname: '/minatic/view',
-                query: { data: id,  }
-              })
+      
+      // Show transcription done in UI!
+      // Update loading to tick
+      setHeader("Transcription complete. Displaying data now.")
+      setIsComplete(true)
+      await delay(1000);
+      setIsNotified(false)
+      
+      Router.push({
+            pathname: '/minatic/view',
+            query: { data: id, title: title, type: type, date: dateValue.startDate}
+          })
     }
   
   
@@ -111,15 +123,15 @@ export default function New() {
   }
 
 
-
-
   return (
     <>
       <Head>
         <title>Minatic Demo</title>
       </Head>
+      
       <AuthLayout>
         <div className="flex flex-col">
+        <Notification isComplete={isComplete} isNotified={isNotified} setIsNotified={setIsNotified} header={header} >{children}</Notification>
           <Link href="/" aria-label="Home">
             <Logo className="h-10 w-auto" />
           </Link>
@@ -170,7 +182,9 @@ export default function New() {
             <option>Quarterly Planning Meetings</option>
             <option>Decision-Making Meetings</option>
           </SelectField>
-          <TextField
+
+          <DatePickerField label="Meeting Date" displayFormat={"DD/MM/YYYY"} asSingle={true} value={dateValue} onChange={handleDateValueChange} />
+          {/* <TextField
             className="col-span-full"
             label="Email address"
             id="email"
@@ -178,7 +192,7 @@ export default function New() {
             type="email"
             autoComplete="email"
             required
-          />
+          /> */}
           <div className="col-span-full">
             <Button
               //href='/minatic/view'

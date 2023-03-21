@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { saveAs } from "file-saver";
 import { Header, Packer, Paragraph, TextRun, Document, Footer, AlignmentType, HeadingLevel, LineRuleType } from "docx";
+import { Button } from '../Button';
 
-export default function ExportTranscriptButton({transcript}) {
+export default function ExportTranscriptButton({title, type, date, transcript, utterances}) {
 
 
     function exportDocument() {
@@ -17,7 +18,7 @@ export default function ExportTranscriptButton({transcript}) {
         return new Header({
             children: [
                 new Paragraph({
-                text: "Date here",
+                text: date + ":" + type,
                 alignment: AlignmentType.LEFT
                 })
             ]
@@ -45,7 +46,7 @@ export default function ExportTranscriptButton({transcript}) {
         })
     }
 
-    function displayTranscription(utterances){
+    function displayTranscription(){
         return utterances.flatMap(utterance => {
             return [
                 new Paragraph({
@@ -79,10 +80,10 @@ export default function ExportTranscriptButton({transcript}) {
                     default: displayDateHeader()
                 },
                 children: [
-                    displayTitle("Meeting Title Here"),
+                    displayTitle(title),
                     displaySummary(transcript.summary),
-                    displayTitle("Meeting Transcription"),
-                    ...displayTranscription(transcript.utterances)
+                    displayTitle("Full Transcription"),
+                    ...displayTranscription()
                 ],
                 footers: {
                     default: displayFooter()
@@ -90,12 +91,11 @@ export default function ExportTranscriptButton({transcript}) {
             }
         ]
     })
-
     return (
         <>
-           <button onClick={exportDocument} className="btn m-2 bg-blue-300 font-medium">
-                Summarise Meeting
-              </button>
+           <Button color='blue' onClick={exportDocument} >
+                Summarise Meeting in word document
+              </Button>
         </>
     )
 

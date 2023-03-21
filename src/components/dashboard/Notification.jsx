@@ -3,7 +3,7 @@ import { Transition } from '@headlessui/react'
 import { CheckCircleIcon } from '@heroicons/react/24/outline'
 import { XMarkIcon } from '@heroicons/react/20/solid'
 
-export default function Notification({isNotified, setIsNotified, header, children}) {
+export default function Notification({isNotified, setIsNotified, header, children, isComplete}) {
 
   return (
     <>
@@ -28,7 +28,22 @@ export default function Notification({isNotified, setIsNotified, header, childre
               <div className="p-4">
                 <div className="flex items-start">
                   <div className="flex-shrink-0">
-                    <CheckCircleIcon className="h-6 w-6 text-green-400" aria-hidden="true" />
+                    
+                    {isComplete ? (
+                      <CheckCircleIcon className="h-6 w-6 text-green-400" aria-hidden="true" />
+                    ) : 
+                    (
+                      <div className="flex items-center justify-center">
+                      <div
+                        className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+                        role="status">
+                        <span
+                          className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+                          >Loading...</span>
+                      </div>
+                    </div>
+                    )}
+                    
                   </div>
                   <div className="ml-3 w-0 flex-1 pt-0.5">
                     <p className="text-sm font-medium text-gray-900">{header}</p>

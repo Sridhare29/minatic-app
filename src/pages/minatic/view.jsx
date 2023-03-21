@@ -1,10 +1,12 @@
 import MinaticLayout from '@/components/dashboard/minaticLayout';
 import TranscriptContainer from '@/components/dashboard/TranscriptContainer';
-import { SelectField } from '@/components/Fields';
-import { useEffect, useState } from 'react';
+import { SelectField, TextField } from '@/components/Fields';
+import { useContext, useEffect, useState } from 'react';
 
-import {getTranscript_demo, getTranscript} from '@/lib/assemblyai';
+import {getTranscript} from '@/lib/assemblyai';
 import ExportTranscriptButton from '@/components/dashboard/ExportTranscriptButton';
+import { Button } from '@/components/Button';
+
 
 // Get transcript data
 // export async function getStaticProps() {
@@ -32,40 +34,43 @@ import ExportTranscriptButton from '@/components/dashboard/ExportTranscriptButto
 
 export async function getServerSideProps(context) {
     const id = context.query.data
+    const title = context.query.title
+    const type = context.query.type
+    const date = context.query.date
+
+
     const data = await getTranscript(id);
     const transcripts = data.data;
-    
-      const speakerSets = new Set()
-  data.data.utterances.map(item => {
-    speakerSets.add(item.speaker);
-  })
-  const speakers = [...speakerSets];
+
+    const speakerSets = new Set()
+    data.data.utterances.map(item => {
+        speakerSets.add(item.speaker);
+    })
+    const speakers = [...speakerSets];
 
       return {
         props: {
             transcripts,
-            speakers
+            speakers,
+            title,
+            type,
+            date
         }
     }
 }
 
-export default function View({transcripts, speakers}) {
+export default function View({transcripts, speakers, title, type, date}) {
 
-    
-    // update audioplayer data
-    // update transcript state
-    useEffect(() => {
-        console.log(JSON.parse(localStorage.getItem('audio')))
-    })
+    const [transcript, setTranscript] = useState(transcripts.utterances);
 
-
-    const [transcript, setTranscript] = useState(transcripts);
     
       const [oldName, setOldName] = useState(speakers);
       const [speakerNameIndex, setSpeakerNameIndex ] = useState(0);
       const [newName, setNewName] = useState("");
     
       const handleChangeName = (newName) => {
+        
+        console.log(transcript)
         const updatedTranscript = transcript.map(line => {
           if (line.speaker === oldName[speakerNameIndex]) {
             return { ...line, speaker: newName };
@@ -85,20 +90,15 @@ export default function View({transcripts, speakers}) {
         setTranscript(updatedTranscript);
       };
 
-    //   const handleSelectSpeakerChange = (speakerNameIndex) => {
-    //     console.log("speaker " + oldName[speakerNameIndex] + " selected")
-    //   }
-
-
     return (
         <>
             <MinaticLayout>
-            <audio className="col-auto w-50" id='player' controls='controls'/>
+            {/* <audio className="col-auto w-50" id='player' controls='controls' src={url}/> */}
                 <div className='grid grid-flow-col auto-cols-max gap-4'>
                     <div>
                         <div id='transcription' className='max-h-screen border border-2 overflow-auto'>
                             {/* FIXME: Update Speaker Card UI */}                      
-                            <TranscriptContainer transcript={transcript.utterances} />
+                            <TranscriptContainer transcript={transcript} />
                         </div>
                     </div>
                     <div>
@@ -107,9 +107,9 @@ export default function View({transcripts, speakers}) {
                             <div className="px-4 py-5 sm:p-6">
                                 <h3 className="text-base font-semibold leading-6 text-gray-900">Meeting Details</h3>
                                 <div className="mt-2 max-w-xl text-sm text-gray-500">
-                                    <p>Title: Morning Check-in</p>
-                                    <p>Meeting Type: Check-in Meeting</p>
-                                    <p>Date: 22/03/2023</p>
+                                    <p>Meeting Title: {title}</p>
+                                    <p>Meeting Type: {type}</p>
+                                    <p>Meeting Date: {date}</p>
                                 </div>
                             </div>
                         </div>
@@ -127,16 +127,15 @@ export default function View({transcripts, speakers}) {
                                         ))}
                                     </SelectField>
 
-                                    Coming Soon!
-                                    <input
+                                    <TextField
                                     type="text"
                                     placeholder="Enter new name"
                                     value={newName}
                                     onChange={e => setNewName(e.target.value)}
                                     />
-                                    <button onClick={() => handleChangeName(newName)}>
-                                    Change {oldName} to {newName}
-                                    </button>
+                                    <Button onClick={() => handleChangeName(newName)} color='blue'>
+                                    Change {oldName[speakerNameIndex]} to {newName}
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -146,8 +145,7 @@ export default function View({transcripts, speakers}) {
                                 <h3 className="text-base font-semibold leading-6 text-gray-900">Export</h3>
                                 <div className="mt-2 max-w-xl text-sm text-gray-500">
                                    {/* TODO: Able to provide export functionality */}
-                                   Coming Soon!
-                                   <ExportTranscriptButton transcript={transcript} />
+                                   <ExportTranscriptButton title={title} type={type} date={date} transcript={transcripts} utterances={transcript} />
                                 </div>
                             </div>
                         </div>

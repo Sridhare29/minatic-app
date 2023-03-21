@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 import Ziyi from '@/images/avatars/Ziyi.png';
 import Minatic from '@/images/minatic.png';
+import Link from 'next/link';
 
 const user = {
   name: 'Wang Ziyi',
@@ -47,11 +48,14 @@ export default function minaticlayout({children}) {
                     <div className="flex h-16 items-center justify-between">
                       <div className="flex items-center">
                         <div className="flex-shrink-0">
+                        <Link href="/" aria-label="Home">
                           <Image
-                            className="h-8 w-8"
-                            src={Minatic}
-                            alt="Minatic Logo"
-                          />
+                              className="h-8 w-8"
+                              src={Minatic}
+                              alt="Minatic Logo"
+                            />
+                        </Link>
+                          
                         </div>
                         <div className="hidden md:block">
                           <div className="ml-10 flex items-baseline space-x-4">
