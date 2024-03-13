@@ -1,23 +1,20 @@
 
-
+// Dummy keys <- no longer work
 // eslint-disable-next-line import/no-anonymous-default-export
 export default async (req, res) => {
     const { email } = req.body;
     console.log({ email });  
 
     // TODO: put in .env
-    // APIKEY -> 0278dffb9f7cf72362fc264b408bc153-us21
-    // Audience ID -> fba0d2ee1a
-    // API Server -> https://us21.admin.mailchimp.com/
     
     if (!email) {
         return res.status(400).json({ error: 'Email is required' });
       }
     
       try {
-        const AUDIENCE_ID = "fba0d2ee1a"
-        const API_KEY = "0278dffb9f7cf72362fc264b408bc153-us21";
-        const DATACENTER = "us21"
+        const AUDIENCE_ID = ""
+        const API_KEY = "";
+        const DATACENTER = ""
         const data = {
           email_address: email,
           status: 'subscribed',
